@@ -2,6 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Micro-animations for premium handmade feel */
+@keyframes soft-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes button-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-soft-fade-in {
+  animation: soft-fade-in 0.8s ease-out forwards;
+}
+
+.animate-button-bounce {
+  animation: button-bounce 0.6s ease-in-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */

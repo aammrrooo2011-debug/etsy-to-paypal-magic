@@ -46,9 +46,10 @@ const ProductFeatures = () => {
             return (
               <div
                 key={index}
-                className="group p-6 rounded-2xl bg-card border border-border hover:border-primary/50 hover:shadow-lifted transition-all"
+                className="group p-6 rounded-2xl bg-card border border-border hover:border-primary/50 hover:shadow-lifted transition-all hover-lift animate-soft-fade-in"
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all group-hover:scale-110">
                   <Icon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
@@ -63,12 +64,13 @@ const ProductFeatures = () => {
           {[productImage2, productImage3, productImage4].map((img, index) => (
             <div
               key={index}
-              className="group relative rounded-2xl overflow-hidden shadow-soft hover:shadow-lifted transition-all"
+              className="group relative rounded-2xl overflow-hidden shadow-soft hover:shadow-lifted transition-all hover-lift"
             >
               <img
                 src={img}
-                alt={`Product detail ${index + 1}`}
-                className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                alt={`Handmade Quran gift set detail ${index + 1} - Premium velvet and wood craftsmanship`}
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>

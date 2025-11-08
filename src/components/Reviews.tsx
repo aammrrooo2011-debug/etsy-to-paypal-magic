@@ -31,24 +31,25 @@ const Reviews = () => {
   return (
     <section className="py-20 bg-background">
       <div className="container px-4 md:px-6">
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-2 mb-4">
+        <div className="text-center mb-16 animate-soft-fade-in">
+          <div className="flex items-center justify-center gap-2 mb-4 animate-float">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-8 h-8 fill-primary text-primary" />
             ))}
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-2">
-            Customer <span className="text-primary">Reviews</span>
+            Real <span className="text-primary">Etsy Reviews</span>
           </h2>
-          <p className="text-xl text-muted-foreground">5.0 out of 5 stars • 32 reviews</p>
-          <p className="text-sm text-muted-foreground mt-2">100% of buyers recommend this product</p>
+          <p className="text-xl text-muted-foreground">5.0 ★ from 32 verified buyers</p>
+          <p className="text-sm text-muted-foreground mt-2">100% of customers recommend this handmade gift</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="p-6 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-soft transition-all"
+              className="p-6 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-soft transition-all hover-lift animate-soft-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex items-start justify-between mb-4">
                 <div>

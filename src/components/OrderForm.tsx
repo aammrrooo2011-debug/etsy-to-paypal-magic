@@ -150,10 +150,10 @@ const OrderForm = () => {
             </p>
             
             {/* Trust Banner */}
-            <div className="bg-gradient-to-r from-gold/10 via-gold-dark/10 to-gold/10 border-2 border-gold/30 rounded-2xl p-6 mx-auto max-w-2xl">
+            <div className="bg-gradient-to-r from-gold/10 via-gold-dark/10 to-gold/10 border-2 border-gold/30 rounded-2xl p-6 mx-auto max-w-2xl animate-soft-fade-in hover-lift">
               <div className="grid sm:grid-cols-3 gap-6">
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center animate-float">
                     <RefreshCw className="w-8 h-8 text-gold" />
                   </div>
                   <div>
@@ -163,7 +163,7 @@ const OrderForm = () => {
                 </div>
                 
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center animate-float" style={{ animationDelay: '0.5s' }}>
                     <Truck className="w-8 h-8 text-gold" />
                   </div>
                   <div>
@@ -173,7 +173,7 @@ const OrderForm = () => {
                 </div>
                 
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center animate-float" style={{ animationDelay: '1s' }}>
                     <CreditCard className="w-8 h-8 text-gold" />
                   </div>
                   <div>
@@ -185,7 +185,7 @@ const OrderForm = () => {
             </div>
           </div>
 
-          <div className="space-y-6 bg-card border border-border rounded-2xl p-8 shadow-soft">
+          <div className="space-y-6 bg-card border border-border rounded-2xl p-8 shadow-soft hover-lift animate-soft-fade-in">
             {/* Customer Information */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold">Contact Information</h3>
@@ -347,9 +347,24 @@ const OrderForm = () => {
                 </div>
               )}
               
-              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                <Shield className="w-4 h-4" />
-                <span>Protected by PayPal's 30-Day Money Back Guarantee</span>
+              {/* Trust Badges Below PayPal */}
+              <div className="space-y-3 pt-4 border-t border-border">
+                <div className="flex items-center justify-center gap-2 text-sm text-foreground font-medium">
+                  <Shield className="w-5 h-5 text-green-600" />
+                  <span>Secure Checkout with PayPal Protection</span>
+                </div>
+                <div className="flex items-center justify-center gap-2 text-sm text-foreground font-medium">
+                  <Truck className="w-5 h-5 text-blue-600" />
+                  <span>Fast Shipping - Arrives in 4-5 Days</span>
+                </div>
+                <div className="flex items-center justify-center gap-2 text-sm text-foreground font-medium">
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <div key={i} className="w-4 h-4 text-primary">★</div>
+                    ))}
+                  </div>
+                  <span>5★ Etsy Reviews from Real Customers</span>
+                </div>
               </div>
             </div>
           </div>
