@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star, Shield, Truck, CreditCard } from "lucide-react";
 import productImage1 from "@/assets/product-1.jpg";
 
 const Hero = () => {
@@ -44,6 +44,41 @@ const Hero = () => {
             <div className="flex items-baseline gap-3 justify-center lg:justify-start">
               <span className="text-5xl font-bold text-primary">$146.50</span>
               <span className="text-muted-foreground">Free Express Shipping</span>
+            </div>
+
+            {/* Trust Badges */}
+            <div className="bg-gradient-to-r from-gold/10 to-gold-dark/10 border-2 border-gold/30 rounded-xl p-6 space-y-4">
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div className="flex items-center gap-3 justify-center sm:justify-start">
+                  <div className="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-gold" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-foreground">30-Day</div>
+                    <div className="text-sm text-muted-foreground">Money Back</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3 justify-center sm:justify-start">
+                  <div className="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+                    <Truck className="w-6 h-6 text-gold" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-foreground">Free Express</div>
+                    <div className="text-sm text-muted-foreground">4-5 Days</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3 justify-center sm:justify-start">
+                  <div className="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+                    <CreditCard className="w-6 h-6 text-gold" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-foreground">PayPal</div>
+                    <div className="text-sm text-muted-foreground">Protected</div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">

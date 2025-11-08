@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Shield, RefreshCw } from "lucide-react";
+import { Loader2, Shield, RefreshCw, Truck, CreditCard } from "lucide-react";
 
 declare global {
   interface Window {
@@ -149,21 +149,38 @@ const OrderForm = () => {
               Fill in your details and personalize your gift set
             </p>
             
-            {/* Trust Badges */}
-            <div className="flex flex-wrap justify-center gap-6 mt-6">
-              <div className="flex items-center gap-2 text-sm">
-                <Shield className="w-5 h-5 text-green-600" />
-                <span className="font-semibold">Secure Payment</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <RefreshCw className="w-5 h-5 text-green-600" />
-                <span className="font-semibold">30-Day Money Back Guarantee</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#003087">
-                  <path d="M20.905 9.5c0-2.802-2.278-5.097-5.047-5.097H9.142c-.354 0-.656.256-.714.607L6.22 18.439c-.042.254.152.491.409.491h2.966l.745-4.758-.023.149c.058-.351.356-.607.714-.607h1.487c2.922 0 5.208-1.196 5.877-4.651.02-.098.035-.195.051-.291.193-1.226.038-2.062-.54-2.791z"/>
-                </svg>
-                <span className="font-semibold">PayPal Buyer Protection</span>
+            {/* Trust Banner */}
+            <div className="bg-gradient-to-r from-gold/10 via-gold-dark/10 to-gold/10 border-2 border-gold/30 rounded-2xl p-6 mx-auto max-w-2xl">
+              <div className="grid sm:grid-cols-3 gap-6">
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                    <RefreshCw className="w-8 h-8 text-gold" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-lg text-foreground">30-Day</div>
+                    <div className="text-sm text-muted-foreground">Money Back Guarantee</div>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                    <Truck className="w-8 h-8 text-gold" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-lg text-foreground">Express Shipping</div>
+                    <div className="text-sm text-muted-foreground">Free in 4-5 Days</div>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                    <CreditCard className="w-8 h-8 text-gold" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-lg text-foreground">PayPal Payment</div>
+                    <div className="text-sm text-muted-foreground">Buyer Protection</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
