@@ -24,9 +24,10 @@ serve(async (req) => {
       throw new Error('PayPal credentials not configured');
     }
 
-    // Get PayPal access token
+    // Get PayPal access token (using sandbox for testing)
+    const PAYPAL_API_BASE = 'https://api-m.sandbox.paypal.com';
     const auth = btoa(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`);
-    const tokenResponse = await fetch('https://api-m.paypal.com/v1/oauth2/token', {
+    const tokenResponse = await fetch(`${PAYPAL_API_BASE}/v1/oauth2/token`, {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${auth}`,
@@ -44,7 +45,7 @@ serve(async (req) => {
     const { access_token } = await tokenResponse.json();
 
     // Create PayPal order
-    const orderResponse = await fetch('https://api-m.paypal.com/v2/checkout/orders', {
+    const orderResponse = await fetch(`${PAYPAL_API_BASE}/v2/checkout/orders`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${access_token}`,
