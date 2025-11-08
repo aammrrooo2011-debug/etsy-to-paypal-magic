@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Shield, RefreshCw } from "lucide-react";
 
 declare global {
   interface Window {
@@ -15,6 +15,8 @@ declare global {
 const OrderForm = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [paypalOrderId, setPaypalOrderId] = useState<string | null>(null);
+  const paypalContainerRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     customerName: "",
     customerEmail: "",
@@ -27,49 +29,53 @@ const OrderForm = () => {
     personalization: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  const isFormValid = formData.customerName && formData.customerEmail && 
+    formData.address && formData.city && formData.state && 
+    formData.zipCode && formData.country;
 
-    try {
-      // Create PayPal order via edge function
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-paypal-order`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: 146.50,
-            customerName: formData.customerName,
-            customerEmail: formData.customerEmail,
-            customerPhone: formData.customerPhone,
-            shippingAddress: {
-              address: formData.address,
-              city: formData.city,
-              state: formData.state,
-              zipCode: formData.zipCode,
-              country: formData.country,
+  useEffect(() => {
+    const initializePayPal = async () => {
+      if (!isFormValid || !window.paypal || paypalOrderId) return;
+      
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-paypal-order`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
             },
-            personalization: formData.personalization,
-          }),
+            body: JSON.stringify({
+              amount: 146.50,
+              customerName: formData.customerName,
+              customerEmail: formData.customerEmail,
+              customerPhone: formData.customerPhone,
+              shippingAddress: {
+                address: formData.address,
+                city: formData.city,
+                state: formData.state,
+                zipCode: formData.zipCode,
+                country: formData.country,
+              },
+              personalization: formData.personalization,
+            }),
+          }
+        );
+
+        if (!response.ok) throw new Error("Failed to create order");
+
+        const { orderId } = await response.json();
+        setPaypalOrderId(orderId);
+
+        if (paypalContainerRef.current) {
+          paypalContainerRef.current.innerHTML = '';
         }
-      );
 
-      if (!response.ok) {
-        throw new Error("Failed to create order");
-      }
-
-      const { orderId } = await response.json();
-
-      // Initialize PayPal buttons
-      if (window.paypal) {
         window.paypal
           .Buttons({
             createOrder: () => orderId,
             onApprove: async (data: any) => {
-              // Capture the order
               const captureResponse = await fetch(
                 `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/capture-paypal-order`,
                 {
@@ -86,8 +92,6 @@ const OrderForm = () => {
                   title: "Order Confirmed!",
                   description: "Thank you for your purchase. You'll receive a confirmation email shortly.",
                 });
-                
-                // Reset form
                 setFormData({
                   customerName: "",
                   customerEmail: "",
@@ -99,6 +103,7 @@ const OrderForm = () => {
                   country: "",
                   personalization: "",
                 });
+                setPaypalOrderId(null);
               } else {
                 throw new Error("Failed to capture payment");
               }
@@ -113,23 +118,24 @@ const OrderForm = () => {
             },
           })
           .render("#paypal-button-container");
+      } catch (error) {
+        console.error("Order error:", error);
+        toast({
+          title: "Error",
+          description: "Failed to initialize payment. Please check your information.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      toast({
-        title: "Order Created",
-        description: "Please complete your payment with PayPal below.",
-      });
-    } catch (error) {
-      console.error("Order error:", error);
-      toast({
-        title: "Error",
-        description: "Failed to create order. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const timer = setTimeout(() => {
+      initializePayPal();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [formData, isFormValid, paypalOrderId]);
 
   return (
     <section id="order" className="py-20 bg-gradient-to-b from-cream to-background">
@@ -139,12 +145,30 @@ const OrderForm = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Complete Your <span className="text-primary">Order</span>
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-6">
               Fill in your details and personalize your gift set
             </p>
+            
+            {/* Trust Badges */}
+            <div className="flex flex-wrap justify-center gap-6 mt-6">
+              <div className="flex items-center gap-2 text-sm">
+                <Shield className="w-5 h-5 text-green-600" />
+                <span className="font-semibold">Secure Payment</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <RefreshCw className="w-5 h-5 text-green-600" />
+                <span className="font-semibold">30-Day Money Back Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#003087">
+                  <path d="M20.905 9.5c0-2.802-2.278-5.097-5.047-5.097H9.142c-.354 0-.656.256-.714.607L6.22 18.439c-.042.254.152.491.409.491h2.966l.745-4.758-.023.149c.058-.351.356-.607.714-.607h1.487c2.922 0 5.208-1.196 5.877-4.651.02-.098.035-.195.051-.291.193-1.226.038-2.062-.54-2.791z"/>
+                </svg>
+                <span className="font-semibold">PayPal Buyer Protection</span>
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 bg-card border border-border rounded-2xl p-8 shadow-soft">
+          <div className="space-y-6 bg-card border border-border rounded-2xl p-8 shadow-soft">
             {/* Customer Information */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold">Contact Information</h3>
@@ -285,24 +309,33 @@ const OrderForm = () => {
               </div>
             </div>
 
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-6 text-lg bg-gradient-to-r from-gold to-gold-dark hover:scale-105 transition-all"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                "Continue to PayPal Payment"
+            {/* PayPal Payment Section */}
+            <div className="space-y-4">
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-4">
+                  {isFormValid ? "Complete your payment with PayPal" : "Fill in all required fields to continue"}
+                </p>
+              </div>
+              
+              {/* PayPal Button Container */}
+              <div 
+                id="paypal-button-container" 
+                ref={paypalContainerRef}
+                className="min-h-[50px]"
+              />
+              
+              {isLoading && (
+                <div className="flex justify-center py-4">
+                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                </div>
               )}
-            </Button>
-
-            {/* PayPal Button Container */}
-            <div id="paypal-button-container" className="mt-6"></div>
-          </form>
+              
+              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                <Shield className="w-4 h-4" />
+                <span>Protected by PayPal's 30-Day Money Back Guarantee</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
