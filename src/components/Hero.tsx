@@ -9,11 +9,11 @@ const Hero = () => {
       <div className="container relative z-10 px-4 md:px-6 py-12 md:py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Image */}
-          <div className="order-2 lg:order-1 relative animate-soft-fade-in">
+          <div className="order-1 lg:order-1 relative animate-soft-fade-in">
             <div className="relative rounded-2xl overflow-hidden shadow-lifted hover-lift">
               <img
                 src={productImage1}
-                alt="Handmade personalized velvet Quran gift set with prayer mat - Islamic wedding favor with secure PayPal payment"
+                alt="Handmade personalized velvet Quran gift set with prayer mat - Islamic wedding favor"
                 className="w-full h-auto object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
@@ -21,23 +21,23 @@ const Hero = () => {
           </div>
 
           {/* Content */}
-          <div className="order-1 lg:order-2 text-center lg:text-left space-y-6 animate-soft-fade-in">
+          <div className="order-2 lg:order-2 text-center lg:text-left space-y-6 animate-soft-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+              Premium Handmade Velvet Quran Gift Set
+              <span className="block bg-gradient-to-r from-gold to-gold-dark bg-clip-text text-transparent mt-2">
+                with Prayer Mat & Personalization
+              </span>
+            </h1>
+
             <div className="flex items-center justify-center lg:justify-start gap-2 text-primary">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-5 h-5 fill-current" />
               ))}
-              <span className="text-muted-foreground ml-2">5.0 ★ from 32 Etsy reviews</span>
+              <span className="text-muted-foreground ml-2">5.0 ★ from 32 reviews</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
-              Your Favorite Etsy Find —
-              <span className="block bg-gradient-to-r from-gold to-gold-dark bg-clip-text text-transparent mt-2">
-                Handmade with Love
-              </span>
-            </h1>
-
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
-              Pay Securely with PayPal. Premium handcrafted Islamic gift set, perfect for weddings and special occasions.
+              Premium handcrafted Islamic gift set, perfect for weddings and special occasions. Each piece is made with authentic materials and Islamic tradition.
             </p>
 
             {/* Product Benefits */}
@@ -56,10 +56,18 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="flex items-baseline gap-3 justify-center lg:justify-start">
-              <span className="text-5xl font-bold text-primary">$146.50</span>
-              <span className="text-muted-foreground">Free Express Shipping</span>
+            <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-3 justify-center lg:justify-start">
+              <div className="flex items-baseline gap-3">
+                <span className="text-2xl md:text-3xl font-medium text-muted-foreground line-through">$170.00</span>
+                <span className="text-5xl md:text-6xl font-bold text-primary">$140.00</span>
+              </div>
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-destructive/10 text-destructive font-semibold text-sm">
+                Save $30
+              </span>
             </div>
+            <p className="text-sm text-muted-foreground text-center lg:text-left -mt-2">
+              Free Express Shipping • Limited Time Offer
+            </p>
 
             {/* Trust Badges */}
             <div className="bg-gradient-to-r from-gold/10 to-gold-dark/10 border-2 border-gold/30 rounded-xl p-6 space-y-4">
