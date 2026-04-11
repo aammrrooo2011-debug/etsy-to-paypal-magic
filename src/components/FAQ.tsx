@@ -4,23 +4,27 @@ import { useState } from "react";
 const faqs = [
   {
     question: "How long does shipping take?",
-    answer: "We offer FREE express shipping that takes 4-5 business days. All orders are shipped from Turkey with full tracking information provided via email."
+    answer: "We offer FREE express shipping with 3-day delivery. All orders ship from Turkey with full tracking. You'll receive tracking information via email as soon as your order dispatches."
   },
   {
     question: "Is this an authentic handmade product?",
-    answer: "Yes! Each Quran gift set is carefully handcrafted with premium velvet, solid wood, and crystal materials. Every piece is made with attention to detail and Islamic tradition."
+    answer: "Yes! Each Quran gift set is carefully handcrafted in Turkey by our production partner Mehmet in Kayseri with premium velvet, solid wood, plexi, and paper materials. We are a Star Seller on Etsy with 34 five-star reviews."
   },
   {
-    question: "How does PayPal payment work?",
-    answer: "Simply fill in your shipping details and click the PayPal button. You'll be redirected to PayPal's secure checkout where you can pay with your PayPal balance, credit card, or debit card. Your purchase is protected by PayPal's Buyer Protection program and our 30-day money back guarantee."
+    question: "How can I pay?",
+    answer: "You can buy directly through our Etsy shop using the coupon code AMRO001 for a discount. Etsy accepts credit cards, debit cards, PayPal, Apple Pay, Google Pay, and more. Direct card payments on this website are coming soon."
+  },
+  {
+    question: "What are the two product options?",
+    answer: "We offer two variations: 'Box & Quran' which includes the luxury wooden box, full-page Quran, mini Quran, and bookmark. The 'Complete Gift Set' includes everything: the box, Quran, prayer mat, crystal rosary, digital tasbih counter, gold bookmark with tassel, and prayer scarf."
   },
   {
     question: "Can I personalize the gift set?",
-    answer: "Absolutely! During checkout, you can add a custom message (up to 100 characters) that will be beautifully engraved on your gift set at no extra charge."
+    answer: "Absolutely! You can add a custom message of up to 100 characters that will be beautifully crafted onto your gift set at no extra charge. Simply enter your personalization text when ordering."
   },
   {
     question: "What's your return policy?",
-    answer: "We offer a 30-day money back guarantee. If you're not completely satisfied with your purchase, contact us within 30 days for a full refund. We want you to love your handmade gift!"
+    answer: "We offer a 30-day money back guarantee. Returns and exchanges are accepted. If you're not completely satisfied with your purchase, contact us within 30 days. Buyers are responsible for return shipping costs."
   }
 ];
 
@@ -45,7 +49,6 @@ const FAQ = () => {
               <div
                 key={index}
                 className="bg-card border border-border rounded-xl overflow-hidden hover-lift"
-                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
