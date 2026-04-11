@@ -1,4 +1,4 @@
-import { Package, Truck, Shield, Heart } from "lucide-react";
+import { Package, Truck, Shield, Heart, Sparkles, Box } from "lucide-react";
 import productImage2 from "@/assets/product-2.jpg";
 import productImage3 from "@/assets/product-3.jpg";
 import productImage4 from "@/assets/product-4.jpg";
@@ -7,22 +7,32 @@ const features = [
   {
     icon: Package,
     title: "Complete Gift Set",
-    description: "Includes Quran, prayer mat, rosary, digital counter, bookmark, and luxury box"
+    description: "Quran, prayer mat, rosary, digital tasbih, bookmark, scarf & luxury box"
   },
   {
     icon: Truck,
-    title: "Express Free Shipping",
-    description: "Arrives in 4-5 days with tracked express delivery"
+    title: "3-Day Express Shipping",
+    description: "Free express delivery with full tracking from Turkey"
   },
   {
     icon: Shield,
-    title: "Quality Guaranteed",
-    description: "Handcrafted with premium velvet, wood, and plexi materials"
+    title: "30-Day Money Back",
+    description: "Full refund guarantee if you're not satisfied"
   },
   {
     icon: Heart,
-    title: "Personalization",
-    description: "Custom engraving available for that special touch"
+    title: "Free Personalization",
+    description: "Custom text engraved on your gift at no extra charge"
+  },
+  {
+    icon: Sparkles,
+    title: "Star Seller",
+    description: "5-star rated on Etsy with 34 verified reviews"
+  },
+  {
+    icon: Box,
+    title: "Premium Materials",
+    description: "Handcrafted with wood, plexi, velvet & paper in Turkey"
   }
 ];
 
@@ -30,7 +40,6 @@ const ProductFeatures = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-background to-cream">
       <div className="container px-4 md:px-6">
-        {/* What's Included */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             What's <span className="text-primary">Included</span>
@@ -40,14 +49,14 @@ const ProductFeatures = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div
                 key={index}
                 className="group p-6 rounded-2xl bg-card border border-border hover:border-primary/50 hover:shadow-lifted transition-all hover-lift animate-soft-fade-in"
-                style={{ animationDelay: `${index * 0.15}s` }}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all group-hover:scale-110">
                   <Icon className="w-6 h-6 text-primary" />
@@ -77,25 +86,26 @@ const ProductFeatures = () => {
           ))}
         </div>
 
-        {/* Product Details */}
+        {/* Set Contents */}
         <div className="mt-16 bg-card border border-border rounded-2xl p-8 md:p-12">
-          <h3 className="text-2xl font-bold mb-6">Set Contents</h3>
-          <ul className="grid md:grid-cols-2 gap-4">
+          <h3 className="text-2xl font-bold mb-6">Complete Set Contents</h3>
+          <div className="grid md:grid-cols-2 gap-4">
             {[
-              "1 Full-Page Quran (17cm x 25cm)",
+              "1 Full-Page Quran (17cm × 25cm)",
               "1 Mini Quran",
               "1 Prayer Scarf",
               "1 Crystal Rosary",
               "1 Digital Tasbih Counter",
               "1 Gold Bookmark with Tassel",
-              "1 Luxury Wooden Box with Intricate Designs"
+              "1 Luxury Wooden & Plexi Box with Intricate Designs",
+              "Free Personalization Included"
             ].map((item, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2" />
+              <li key={index} className="flex items-start gap-3 list-none">
+                <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <span className="text-foreground">{item}</span>
               </li>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </section>
