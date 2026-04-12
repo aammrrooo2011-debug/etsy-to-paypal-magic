@@ -3,24 +3,28 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "How long does shipping take?",
-    answer: "We offer FREE express shipping with 3-day delivery. All orders ship from Turkey with full tracking. You'll receive tracking information via email as soon as your order dispatches."
+    question: "How long does shipping take to the UK?",
+    answer: "We offer FREE express shipping to the UK with 3–5 working day delivery. All orders ship from Turkey with full tracking. You'll receive tracking information via email as soon as your order dispatches."
   },
   {
     question: "Is this an authentic handmade product?",
-    answer: "Yes! Each Quran gift set is carefully handcrafted in Turkey by our production partner Mehmet in Kayseri with premium velvet, solid wood, plexi, and paper materials. We are a Star Seller on Etsy with 34 five-star reviews."
+    answer: "Yes! Each Quran gift set is carefully handcrafted in Turkey by our production partner Mehmet in Kayseri, using premium velvet, solid wood, plexi, and paper materials. We are a Star Seller on Etsy with 34 five-star reviews from verified buyers, including many UK Muslim customers."
   },
   {
     question: "How can I pay?",
-    answer: "You can buy directly through our Etsy shop using the coupon code AMRO001 for a discount. Etsy accepts credit cards, debit cards, PayPal, Apple Pay, Google Pay, and more. Direct card payments on this website are coming soon."
+    answer: "The cheapest option is PayPal — our direct price is 10% less than Etsy. Simply click 'Pay with PayPal', complete the payment, then send us your order details and personalisation via email or Etsy message. Alternatively, you can buy through our Etsy shop using code AMRO001 for a discount. Etsy accepts credit/debit cards, PayPal, Apple Pay, Google Pay, and more."
   },
   {
     question: "What are the two product options?",
-    answer: "We offer two variations: 'Box & Quran' which includes the luxury wooden box, full-page Quran, mini Quran, and bookmark. The 'Complete Gift Set' includes everything: the box, Quran, prayer mat, crystal rosary, digital tasbih counter, gold bookmark with tassel, and prayer scarf."
+    answer: "We offer two variations: 'Box & Quran' (£108) which includes the luxury wooden box, full-page Quran, mini Quran, and bookmark. The 'Complete Gift Set' (£126) includes everything: the box, Quran, prayer mat, crystal rosary, digital tasbih counter, gold bookmark with tassel, and prayer scarf. Both are £12–14 cheaper than our Etsy listing."
   },
   {
-    question: "Can I personalize the gift set?",
-    answer: "Absolutely! You can add a custom message of up to 100 characters that will be beautifully crafted onto your gift set at no extra charge. Simply enter your personalization text when ordering."
+    question: "Can I personalise the gift set?",
+    answer: "Absolutely! You can add a custom message of up to 100 characters — a name, dua, wedding date, or anything meaningful — beautifully crafted onto your gift set at no extra charge. Simply enter your personalisation text when ordering."
+  },
+  {
+    question: "Is this gift suitable for Eid, weddings, or Ramadan?",
+    answer: "Yes — our gift sets are designed for exactly these occasions. They're popular among UK Muslim families for Eid gifts, Islamic wedding favours, Nikah gifts, Ramadan presents, newborn gifts (aqiqah), and graduations. A truly meaningful, halal gift."
   },
   {
     question: "What's your return policy?",
@@ -40,7 +44,7 @@ const FAQ = () => {
               Frequently Asked <span className="text-primary">Questions</span>
             </h2>
             <p className="text-muted-foreground">
-              Everything you need to know about your handmade gift
+              Everything UK buyers need to know about our handmade Islamic gift sets
             </p>
           </div>
 
@@ -53,6 +57,7 @@ const FAQ = () => {
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                   className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-muted/30 transition-colors"
+                  aria-expanded={openIndex === index}
                 >
                   <span className="font-semibold text-foreground pr-4">
                     {faq.question}
