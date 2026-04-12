@@ -1,17 +1,28 @@
+import { useState } from "react";
 import { ShoppingBag, ExternalLink, CreditCard, Shield, Truck, Star, CheckCircle, Loader2 } from "lucide-react";
 import { useStripeCheckout } from "@/hooks/use-stripe-checkout";
-import { STRIPE_PAYMENT_LINKS } from "@/lib/stripe-links";
 
 const ETSY_URL = "https://www.etsy.com/shop/seraceislamicgifts/?etsrc=sdt&coupon=AMRO001";
 
 const OrderForm = () => {
+  const [personalization, setPersonalization] = useState("");
   const { startCheckout, loading } = useStripeCheckout();
 
   const handleStripeBoxQuran = () =>
-    startCheckout({ variationId: "box-quran", variationName: "Box & Quran", amountGBP: 108 });
+    startCheckout({ 
+      variationId: "box-quran", 
+      variationName: "Box & Quran", 
+      amountGBP: 108,
+      personalization 
+    });
 
   const handleStripeCompleteSet = () =>
-    startCheckout({ variationId: "all-set", variationName: "Complete Gift Set", amountGBP: 126 });
+    startCheckout({ 
+      variationId: "all-set", 
+      variationName: "Complete Gift Set", 
+      amountGBP: 126,
+      personalization 
+    });
 
   return (
     <section id="order" className="py-20 bg-gradient-to-b from-cream to-background">
@@ -42,6 +53,19 @@ const OrderForm = () => {
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" /> Shipping address collected at checkout</li>
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" /> 256-bit SSL encrypted — fully secure</li>
               </ul>
+
+              <div className="space-y-2 py-2">
+                <label htmlFor="order-personalization" className="text-xs font-bold text-foreground">
+                  ADD PERSONALISATION (FREE)
+                </label>
+                <input
+                  id="order-personalization"
+                  value={personalization}
+                  onChange={(e) => setPersonalization(e.target.value)}
+                  placeholder="e.g. Bismillah, Name, Date..."
+                  className="w-full px-4 py-2 text-sm border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                />
+              </div>
 
               <button
                 id="order-stripe-box-quran-btn"

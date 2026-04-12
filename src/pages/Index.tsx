@@ -3,6 +3,7 @@ import ProductFeatures from "@/components/ProductFeatures";
 import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
 import OrderForm from "@/components/OrderForm";
+import Footer from "@/components/Footer";
 import { ShoppingBag } from "lucide-react";
 
 const Index = () => {
@@ -14,20 +15,9 @@ const Index = () => {
       <FAQ />
       <OrderForm />
       
-      {/* Footer */}
-      <footer className="bg-foreground/5 border-t border-border py-8">
-        <div className="container px-4 md:px-6 text-center">
-          <p className="text-muted-foreground">
-            © 2026 Personalized Quran Gift Sets. All rights reserved.
-          </p>
-          <p className="text-sm text-muted-foreground mt-2">
-            🇹🇷 Handcrafted in Turkey • 🇬🇧 Free Express Shipping to UK (3–5 Days) • ☪️ Halal Gift
-          </p>
-          <p className="text-xs text-muted-foreground mt-2">
-            Our price is 10% cheaper than Etsy. Buy direct via PayPal and save.
-          </p>
-        </div>
-      </footer>
+      <Footer />
+
+      {/* Sticky bottom CTA bar — visible on mobile */}
 
       {/* Sticky bottom CTA bar — visible on mobile */}
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-border shadow-2xl px-4 py-3 flex items-center gap-3">

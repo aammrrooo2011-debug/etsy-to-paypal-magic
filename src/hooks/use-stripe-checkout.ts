@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { STRIPE_PAYMENT_LINKS, VariationId } from "@/lib/stripe-links";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CheckoutOptions {
-  variationId: VariationId;
+  variationId: string;
   variationName: string;
   amountGBP: number;
   personalization?: string;
@@ -10,19 +10,29 @@ interface CheckoutOptions {
 
 export function useStripeCheckout() {
   const [loading, setLoading] = useState(false);
-  const [error] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const startCheckout = (opts: CheckoutOptions) => {
+  const startCheckout = async (opts: CheckoutOptions) => {
     setLoading(true);
+    setError(null);
 
-    const paymentUrl = STRIPE_PAYMENT_LINKS[opts.variationId];
-    if (!paymentUrl) {
+    try {
+      console.log("Starting seamless checkout process...", opts);
+
+      const { data, error: funcError } = await supabase.functions.invoke("create-stripe-session", {
+        body: opts,
+      });
+
+      if (funcError) throw funcError;
+      if (!data?.url) throw new Error("No checkout URL returned from server.");
+
+      // Redirect to the dynamic Stripe Checkout page
+      window.location.href = data.url;
+    } catch (err: any) {
+      console.error("Stripe Checkout Error:", err);
+      setError(err.message || "Could not connect to Stripe. Please try again.");
       setLoading(false);
-      return;
     }
-
-    // Redirect to Stripe Payment Link — personalisation is collected on the Stripe page
-    window.location.href = paymentUrl;
   };
 
   return { startCheckout, loading, error };
