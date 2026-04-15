@@ -9,9 +9,7 @@ const OrderForm = () => {
   const { startCheckout, loading } = useStripeCheckout();
 
   const handleStripeBoxQuran = () => {
-    // @ts-ignore
     if (typeof window.fbq !== 'undefined') {
-      // @ts-ignore
       window.fbq('track', 'InitiateCheckout', {
         content_name: 'Box & Quran',
         value: 108,
@@ -28,9 +26,7 @@ const OrderForm = () => {
   };
 
   const handleStripeCompleteSet = () => {
-    // @ts-ignore
     if (typeof window.fbq !== 'undefined') {
-      // @ts-ignore
       window.fbq('track', 'InitiateCheckout', {
         content_name: 'Complete Gift Set',
         value: 126,
@@ -128,9 +124,7 @@ const OrderForm = () => {
                 rel="noopener noreferrer"
                 id="order-etsy-link"
                 onClick={() => {
-                  // @ts-ignore
                   if (typeof window.fbq !== 'undefined') {
-                    // @ts-ignore
                     window.fbq('track', 'InitiateCheckout', {
                       content_name: 'Etsy Checkout',
                       currency: 'GBP'

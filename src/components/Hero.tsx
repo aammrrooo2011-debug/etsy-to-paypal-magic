@@ -80,9 +80,7 @@ const Hero = () => {
   }, []);
 
   const handleStripeCheckout = () => {
-    // @ts-ignore
     if (typeof window.fbq !== 'undefined') {
-      // @ts-ignore
       window.fbq('track', 'InitiateCheckout', {
         content_name: selected.name,
         value: selected.price,
@@ -306,9 +304,7 @@ const Hero = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                  // @ts-ignore
                   if (typeof window.fbq !== 'undefined') {
-                    // @ts-ignore
                     window.fbq('track', 'InitiateCheckout', {
                       content_name: 'Etsy Checkout',
                       currency: 'GBP'

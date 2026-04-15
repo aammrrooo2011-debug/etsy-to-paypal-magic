@@ -5,9 +5,7 @@ const MetaPixelTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // @ts-ignore
     if (typeof window.fbq !== 'undefined') {
-      // @ts-ignore
       window.fbq('track', 'PageView');
     }
   }, [location]);
