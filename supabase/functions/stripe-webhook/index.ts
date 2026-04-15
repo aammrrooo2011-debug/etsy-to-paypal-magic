@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
 import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
+import { sendMetaCapiEvent, sha256 } from "../_shared/meta-capi.ts";
 
 // Webhook: no CORS needed — called by Stripe directly
 serve(async (req) => {
@@ -59,6 +60,36 @@ serve(async (req) => {
         updated_at: new Date().toISOString(),
       })
       .eq("stripe_session_id", session.id);
+
+    if (session.customer_details?.email) {
+      const email = session.customer_details.email.toLowerCase().trim();
+      const hashedEmail = await sha256(email);
+      
+      // Get variation from metadata
+      const variationName = session.metadata?.variation || "Quran Set";
+      const amount = session.amount_total ? session.amount_total / 100 : 0;
+
+      await sendMetaCapiEvent([
+        {
+          event_name: "Purchase",
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: "website",
+          event_source_url: "https://quranset.co.uk",
+          user_data: {
+            em: [hashedEmail],
+            fn: session.customer_details.name ? [await sha256(session.customer_details.name.split(" ")[0])] : undefined,
+            ln: session.customer_details.name ? [await sha256(session.customer_details.name.split(" ").slice(1).join(" "))] : undefined,
+            client_ip_address: session.customer_details.address?.country || undefined, // IP not available in webhook, use country as backup if needed or omit
+          },
+          custom_data: {
+            value: amount,
+            currency: session.currency?.toUpperCase() || "GBP",
+            content_name: variationName,
+            content_category: "Quran Set",
+          },
+        },
+      ]);
+    }
 
     if (error) {
       console.error("Failed to update order:", error);

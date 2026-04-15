@@ -19,8 +19,23 @@ export function useStripeCheckout() {
     try {
       console.log("Starting seamless checkout process...", opts);
 
+      // Extract Meta cookies if present
+      const getCookie = (name: string) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(";").shift();
+      };
+
+      const fbp = getCookie("_fbp");
+      const fbc = getCookie("_fbc");
+
       const { data, error: funcError } = await supabase.functions.invoke("create-stripe-session", {
-        body: opts,
+        body: {
+          ...opts,
+          fbp,
+          fbc,
+          eventSourceUrl: window.location.href,
+        },
       });
 
       if (funcError) throw funcError;

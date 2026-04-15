@@ -1,8 +1,7 @@
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
+
+import { sendMetaCapiEvent } from "../_shared/meta-capi.ts";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -14,7 +13,10 @@ Deno.serve(async (req) => {
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is missing.");
 
     const body = await req.json();
-    const { variationId, personalization, variationName, amountGBP } = body;
+    const { variationId, personalization, variationName, amountGBP, fbp, fbc, eventSourceUrl } = body;
+
+    const clientIp = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "127.0.0.1";
+    const userAgent = req.headers.get("user-agent") || "";
 
     console.log(`Creating session for ${variationName}. Personalization: ${personalization}`);
 
@@ -57,6 +59,30 @@ Deno.serve(async (req) => {
     });
 
     const session = await response.json();
+
+    if (session.url) {
+      // Send Meta CAPI InitiateCheckout event
+      await sendMetaCapiEvent([
+        {
+          event_name: "InitiateCheckout",
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: "website",
+          event_source_url: eventSourceUrl || "https://quranset.co.uk",
+          user_data: {
+            client_ip_address: clientIp.split(",")[0].trim(),
+            client_user_agent: userAgent,
+            fbp: fbp,
+            fbc: fbc,
+          },
+          custom_data: {
+            value: amountGBP,
+            currency: "GBP",
+            content_name: variationName,
+            content_category: "Quran Set",
+          },
+        },
+      ]);
+    }
 
     if (session.error) {
       console.error("Stripe Error:", session.error);
