@@ -8,21 +8,43 @@ const OrderForm = () => {
   const [personalization, setPersonalization] = useState("");
   const { startCheckout, loading } = useStripeCheckout();
 
-  const handleStripeBoxQuran = () =>
+  const handleStripeBoxQuran = () => {
+    // @ts-ignore
+    if (typeof window.fbq !== 'undefined') {
+      // @ts-ignore
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: 'Box & Quran',
+        value: 108,
+        currency: 'GBP'
+      });
+    }
+
     startCheckout({ 
       variationId: "box-quran", 
       variationName: "Box & Quran", 
       amountGBP: 108,
       personalization 
     });
+  };
 
-  const handleStripeCompleteSet = () =>
+  const handleStripeCompleteSet = () => {
+    // @ts-ignore
+    if (typeof window.fbq !== 'undefined') {
+      // @ts-ignore
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: 'Complete Gift Set',
+        value: 126,
+        currency: 'GBP'
+      });
+    }
+
     startCheckout({ 
       variationId: "all-set", 
       variationName: "Complete Gift Set", 
       amountGBP: 126,
       personalization 
     });
+  };
 
   return (
     <section id="order" className="py-20 bg-gradient-to-b from-cream to-background">
@@ -105,6 +127,16 @@ const OrderForm = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 id="order-etsy-link"
+                onClick={() => {
+                  // @ts-ignore
+                  if (typeof window.fbq !== 'undefined') {
+                    // @ts-ignore
+                    window.fbq('track', 'InitiateCheckout', {
+                      content_name: 'Etsy Checkout',
+                      currency: 'GBP'
+                    });
+                  }
+                }}
                 className="w-full inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-primary-foreground bg-gradient-to-r from-gold to-gold-dark rounded-xl shadow-lifted hover:scale-[1.02] transition-all gap-2"
               >
                 <ShoppingBag className="w-5 h-5" />

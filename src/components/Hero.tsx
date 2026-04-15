@@ -80,6 +80,16 @@ const Hero = () => {
   }, []);
 
   const handleStripeCheckout = () => {
+    // @ts-ignore
+    if (typeof window.fbq !== 'undefined') {
+      // @ts-ignore
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: selected.name,
+        value: selected.price,
+        currency: 'GBP'
+      });
+    }
+
     startCheckout({
       variationId: selected.id,
       variationName: selected.name,
@@ -295,7 +305,16 @@ const Hero = () => {
                 href={ETSY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                id="etsy-buy-link"
+                onClick={() => {
+                  // @ts-ignore
+                  if (typeof window.fbq !== 'undefined') {
+                    // @ts-ignore
+                    window.fbq('track', 'InitiateCheckout', {
+                      content_name: 'Etsy Checkout',
+                      currency: 'GBP'
+                    });
+                  }
+                }}
                 className="w-full inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-xl border-2 border-primary text-foreground hover:bg-primary/5 transition-all gap-2"
               >
                 <ShoppingBag className="w-5 h-5" />
