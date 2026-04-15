@@ -9,6 +9,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
 import Contact from "./pages/Contact";
+import MetaPixelTracker from "./components/MetaPixelTracker";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <MetaPixelTracker />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/privacy" element={<Privacy />} />
