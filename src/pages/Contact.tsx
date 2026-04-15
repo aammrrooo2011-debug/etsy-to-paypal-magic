@@ -64,7 +64,15 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-bold text-foreground">WhatsApp</p>
-                      <p className="text-muted-foreground">Available for order support</p>
+                      <a 
+                        href="https://wa.me/17862991452" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-[#25D366] font-bold hover:underline transition-all"
+                      >
+                        Chat on WhatsApp
+                      </a>
+                      <p className="text-muted-foreground text-xs mt-1">+1 (786) 299-1452</p>
                     </div>
                   </div>
                 </div>

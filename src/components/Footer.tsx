@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -12,13 +12,19 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground max-w-xs">
               Handcrafted in Turkey. Luxury Islamic gifts for your most special occasions.
             </p>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Mail className="w-4 h-4" />
-              <a href="mailto:info@quranset.co.uk" className="hover:text-primary transition-colors">info@quranset.co.uk</a>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Phone className="w-4 h-4" />
-              <a href="tel:+17862991452" className="hover:text-primary transition-colors">+1 (786) 299-1452</a>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Mail className="w-4 h-4" />
+                <a href="mailto:info@quranset.co.uk" className="hover:text-primary transition-colors">info@quranset.co.uk</a>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Phone className="w-4 h-4" />
+                <a href="tel:+17862991452" className="hover:text-primary transition-colors">+1 (786) 299-1452</a>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-[#25D366] font-semibold tracking-wide">
+                <MessageSquare className="w-4 h-4" />
+                <a href="https://wa.me/17862991452" target="_blank" rel="noopener noreferrer" className="hover:underline transition-all underline-offset-4">WhatsApp Support</a>
+              </div>
             </div>
           </div>
 

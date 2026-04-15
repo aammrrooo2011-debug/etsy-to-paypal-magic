@@ -4,6 +4,7 @@ import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
 import OrderForm from "@/components/OrderForm";
 import Footer from "@/components/Footer";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { ShoppingBag } from "lucide-react";
 
 const Index = () => {
@@ -35,6 +36,9 @@ const Index = () => {
         </a>
       </div>
 
+      {/* WhatsApp Floating Button */}
+      <WhatsAppWidget />
+      
       {/* Spacer so footer isn't hidden behind sticky bar on mobile */}
       <div className="h-20 md:hidden" />
     </main>
