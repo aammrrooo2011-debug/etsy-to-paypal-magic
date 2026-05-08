@@ -25,7 +25,6 @@ export const getProducts = (): Product[] => {
     
     return {
       ...p,
-      id: encodeURIComponent(p.id.replace(/\s+/g, '-').toLowerCase()),
       originalPrice: Math.round(p.price / EXCHANGE_RATE_TRY_TO_GBP),
       price: priceGBP,
       currency: 'GBP'

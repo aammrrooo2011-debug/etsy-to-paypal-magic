@@ -18,9 +18,20 @@ def try_read_csv(encoding):
             except:
                 price = 0.0
                 
+            import re
+            def slugify(text):
+                text = text.lower()
+                text = re.sub(r'[^a-z0-9\s-]', '', text)
+                text = re.sub(r'[\s-]+', '-', text).strip('-')
+                return text
+
+            sku = row.get('SKU')
+            title = row.get('TITLE', 'unknown')
+            product_id = sku if sku and len(sku) > 2 else slugify(title)
+            
             product = {
-                "id": row.get('SKU') or row.get('TITLE') or 'unknown',
-                "title": row.get('TITLE'),
+                "id": product_id,
+                "title": title,
                 "description": row.get('DESCRIPTION'),
                 "price": price,
                 "currency": row.get('CURRENCY_CODE'),

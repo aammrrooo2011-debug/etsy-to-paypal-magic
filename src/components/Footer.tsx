@@ -32,6 +32,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-bold text-sm uppercase tracking-wider">Customer Care</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
+              <li><Link to="/shop" className="hover:text-primary transition-colors font-semibold text-primary">Shop All Collection</Link></li>
               <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
               <li><Link to="/shipping" className="hover:text-primary transition-colors">Shipping & Returns</Link></li>
               <li><Link to="/#faq" className="hover:text-primary transition-colors">Frequently Asked Questions</Link></li>
