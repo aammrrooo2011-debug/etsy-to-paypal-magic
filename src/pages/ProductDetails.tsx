@@ -11,8 +11,11 @@ import {
   ShoppingBag, ExternalLink, ArrowLeft, CheckCircle2, AlertCircle, Loader2 
 } from "lucide-react";
 
+import { useCurrency } from "@/context/CurrencyContext";
+
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const { currency, formatPrice } = useCurrency();
   const [product, setProduct] = useState<Product | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
   const [personalization, setPersonalization] = useState("");
@@ -20,13 +23,13 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (id) {
-      const p = getProductById(id);
+      const p = getProductById(id, currency);
       if (p) {
         setProduct(p);
       }
     }
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id, currency]);
 
   if (!product) {
     return (
@@ -50,14 +53,15 @@ const ProductDetails = () => {
         content_ids: [product.id],
         content_type: 'product',
         value: product.price,
-        currency: 'GBP'
+        currency: currency
       });
     }
 
     startCheckout({
       variationId: product.id,
       variationName: product.title,
-      amountGBP: product.price,
+      amount: product.price,
+      currency: currency,
       personalization,
     });
   };
@@ -116,8 +120,8 @@ const ProductDetails = () => {
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">{product.title}</h1>
               <div className="flex items-center gap-4">
-                <span className="text-4xl font-bold text-primary">£{product.price}</span>
-                <span className="text-xl text-muted-foreground line-through">£{(product as any).originalPrice}</span>
+                <span className="text-4xl font-bold text-primary">{formatPrice(product.price)}</span>
+                <span className="text-xl text-muted-foreground line-through">{formatPrice((product as any).originalPrice)}</span>
                 <span className="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded">10% OFF</span>
               </div>
             </div>

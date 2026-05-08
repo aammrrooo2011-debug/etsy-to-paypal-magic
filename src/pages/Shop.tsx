@@ -5,14 +5,17 @@ import { getProducts, Product } from "@/utils/product-utils";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
+import { useCurrency } from "@/context/CurrencyContext";
+
 const Shop = () => {
+  const { currency } = useCurrency();
   const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setProducts(getProducts());
+    setProducts(getProducts(currency));
     window.scrollTo(0, 0);
-  }, []);
+  }, [currency]);
 
   const filteredProducts = products.filter(p => 
     p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

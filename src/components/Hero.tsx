@@ -53,7 +53,11 @@ function useCountdown() {
   return time;
 }
 
+import { useCurrency } from "@/context/CurrencyContext";
+import CurrencySelector from "./CurrencySelector";
+
 const Hero = () => {
+  const { currency, formatPrice, getSymbol } = useCurrency();
   const [currentImage, setCurrentImage] = useState(0);
   const [selectedVariation, setSelectedVariation] = useState(1);
   const [personalization, setPersonalization] = useState("");
@@ -61,6 +65,32 @@ const Hero = () => {
   const countdown = useCountdown();
   const { startCheckout, loading: stripeLoading, error: stripeError } = useStripeCheckout();
 
+  // Dynamic variations based on currency
+  const getVariations = () => {
+    const rates = { GBP: 1, USD: 1.25, EUR: 1.15 }; // Relative to our base GBP rates in the Hero
+    const currentRate = rates[currency];
+    
+    return [
+      {
+        id: "box-quran",
+        name: "Box & Quran",
+        description: "Luxury wooden box + Full-page Quran + Mini Quran + Bookmark",
+        price: Math.round(108 * currentRate),
+        etsyPrice: Math.round(120 * currentRate),
+        originalPrice: Math.round(150 * currentRate),
+      },
+      {
+        id: "all-set",
+        name: "Complete Gift Set",
+        description: "Everything included: Box, Quran, Prayer Mat, Rosary, Digital Tasbih, Bookmark & Scarf",
+        price: Math.round(126 * currentRate),
+        etsyPrice: Math.round(140 * currentRate),
+        originalPrice: Math.round(170 * currentRate),
+      },
+    ];
+  };
+
+  const variations = getVariations();
   const selected = variations[selectedVariation];
   const savings = selected.etsyPrice - selected.price;
 
@@ -84,20 +114,26 @@ const Hero = () => {
       window.fbq('track', 'InitiateCheckout', {
         content_name: selected.name,
         value: selected.price,
-        currency: 'GBP'
+        currency: currency
       });
     }
 
     startCheckout({
       variationId: selected.id,
       variationName: selected.name,
-      amountGBP: selected.price,
+      amount: selected.price,
+      currency: currency,
       personalization,
     });
   };
 
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      {/* Currency Selector - Floating Top Right */}
+      <div className="absolute top-16 right-4 z-30 md:top-20 md:right-8">
+        <CurrencySelector />
+      </div>
+
       {/* Payment result banner */}
       {paymentStatus === "success" && (
         <div className="absolute top-0 left-0 right-0 z-30 bg-emerald-600 text-white py-3 px-4 text-center text-sm font-semibold flex items-center justify-center gap-2">
@@ -115,11 +151,11 @@ const Hero = () => {
       {/* Urgency top banner */}
       <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-r from-emerald-700 via-emerald-600 to-emerald-700 text-white py-2 px-4 text-center text-sm font-semibold flex items-center justify-center gap-2 flex-wrap">
         <Clock className="w-4 h-4 animate-pulse" />
-        <span>🇬🇧 UK Flash Sale — 10% OFF Etsy Price ends in</span>
+        <span>GLOBAL SALE — 10% OFF Etsy Price ends in</span>
         <span className="font-mono bg-white/20 px-2 py-0.5 rounded text-white font-bold">
           {String(countdown.h).padStart(2, "0")}:{String(countdown.m).padStart(2, "0")}:{String(countdown.s).padStart(2, "0")}
         </span>
-        <span className="hidden sm:inline">| Free Express Delivery to UK 🚀</span>
+        <span className="hidden sm:inline">| Free Express Worldwide Delivery 🚀</span>
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-br from-cream via-background to-brown-light" />
@@ -195,7 +231,7 @@ const Hero = () => {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
                 Personalized Velvet Quran Gift Set
                 <span className="block bg-gradient-to-r from-gold to-gold-dark bg-clip-text text-transparent mt-2 text-2xl md:text-3xl lg:text-4xl">
-                  Luxury Islamic Gift — UK Exclusive Price
+                  Luxury Islamic Gift — Special {currency} Price
                 </span>
               </h1>
             </div>
@@ -209,7 +245,7 @@ const Hero = () => {
             </div>
 
             <p className="text-base md:text-lg text-muted-foreground max-w-xl">
-              Beautifully handcrafted in Turkey — the perfect gift for <strong>Eid, Weddings, Ramadan, or any special Islamic occasion.</strong> Loved by the UK Muslim community. 🤲
+              Beautifully handcrafted in Turkey — the perfect gift for <strong>Eid, Weddings, Ramadan, or any special Islamic occasion.</strong> 🤲
             </p>
 
             {/* Variation Selector */}
@@ -232,9 +268,9 @@ const Hero = () => {
                         <div className="text-sm text-muted-foreground mt-1">{v.description}</div>
                       </div>
                       <div className="text-right flex-shrink-0 ml-4">
-                        <div className="text-xs text-muted-foreground line-through">Etsy: £{v.etsyPrice}</div>
-                        <div className="text-2xl font-bold text-primary">£{v.price}</div>
-                        <div className="text-xs font-semibold text-emerald-600">Save £{v.etsyPrice - v.price} vs Etsy</div>
+                        <div className="text-xs text-muted-foreground line-through">Etsy: {formatPrice(v.etsyPrice)}</div>
+                        <div className="text-2xl font-bold text-primary">{formatPrice(v.price)}</div>
+                        <div className="text-xs font-semibold text-emerald-600">Save {formatPrice(v.etsyPrice - v.price)} vs Etsy</div>
                       </div>
                     </div>
                   </button>
@@ -262,18 +298,18 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-3 justify-center lg:justify-start">
               <div className="flex items-baseline gap-3">
                 <span className="text-base font-medium text-muted-foreground">
-                  Etsy price: <span className="line-through">£{selected.etsyPrice}.00</span>
+                  Etsy price: <span className="line-through">{formatPrice(selected.etsyPrice)}.00</span>
                 </span>
                 <span className="text-4xl md:text-5xl font-bold text-primary">
-                  £{selected.price}.00
+                  {formatPrice(selected.price)}.00
                 </span>
               </div>
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm border border-emerald-200">
-                Save £{savings} vs Etsy 🎉
+                Save {formatPrice(savings)} vs Etsy 🎉
               </span>
             </div>
             <p className="text-sm text-muted-foreground text-center lg:text-left -mt-2">
-              Free Express Shipping to UK • 3–5 Day Delivery
+              Free Express Worldwide Shipping • 3–5 Day Delivery
             </p>
 
             {/* Dual CTA Buttons */}
@@ -295,7 +331,7 @@ const Hero = () => {
                 {stripeLoading ? (
                   <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Redirecting to Checkout...</>
                 ) : (
-                  <><CreditCard className="w-5 h-5 mr-2" /> Pay with Card — £{selected.price} (Stripe)</>
+                  <><CreditCard className="w-5 h-5 mr-2" /> Pay with Card — {formatPrice(selected.price)} (Stripe)</>
                 )}
               </Button>
 

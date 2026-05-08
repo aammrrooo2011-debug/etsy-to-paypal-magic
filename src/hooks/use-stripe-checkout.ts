@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 interface CheckoutOptions {
   variationId: string;
   variationName: string;
-  amountGBP: number;
+  amount: number;
+  currency: string;
   personalization?: string;
 }
 

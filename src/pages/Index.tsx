@@ -13,8 +13,12 @@ import ProductGrid from "@/components/ProductGrid";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
+import { useCurrency } from "@/context/CurrencyContext";
+import CurrencySelector from "@/components/CurrencySelector";
+
 const Index = () => {
-  const featuredProducts = getFeaturedProducts(4);
+  const { currency, formatPrice } = useCurrency();
+  const featuredProducts = getFeaturedProducts(4, currency);
 
   return (
     <main className="min-h-screen">
@@ -47,12 +51,18 @@ const Index = () => {
       <Footer />
 
       {/* Sticky bottom CTA bar — visible on mobile */}
-
-      {/* Sticky bottom CTA bar — visible on mobile */}
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-border shadow-2xl px-4 py-3 flex items-center gap-3">
+        <div className="flex-shrink-0">
+          <CurrencySelector />
+        </div>
         <div className="flex-1 min-w-0">
           <p className="text-xs text-muted-foreground truncate">Complete Gift Set</p>
-          <p className="font-bold text-primary text-lg leading-none">£126 <span className="text-xs font-normal text-muted-foreground line-through">£140</span></p>
+          <p className="font-bold text-primary text-lg leading-none">
+            {currency === 'GBP' ? '£126' : currency === 'USD' ? '$158' : '€145'} 
+            <span className="text-xs font-normal text-muted-foreground line-through ml-1">
+              {currency === 'GBP' ? '£140' : currency === 'USD' ? '$175' : '€160'}
+            </span>
+          </p>
         </div>
         <a
           href="#order"

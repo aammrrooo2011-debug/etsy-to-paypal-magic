@@ -11,31 +11,36 @@ export interface Product {
   sku: string;
 }
 
-const EXCHANGE_RATE_TRY_TO_GBP = 44.58;
+const EXCHANGE_RATES = {
+  GBP: 44.58,
+  USD: 32.25,
+  EUR: 34.80
+};
+
 const DISCOUNT_RATE = 0.90; // 10% off
 
-export const getProducts = (): Product[] => {
+export const getProducts = (targetCurrency: 'GBP' | 'USD' | 'EUR' = 'GBP'): Product[] => {
   return (productsData as any[]).map(p => {
-    let priceGBP = p.price;
-    if (p.currency === 'TRY') {
-      // Convert TRY to Etsy's GBP equivalent, then apply 10% discount
-      const etsyGBP = p.price / EXCHANGE_RATE_TRY_TO_GBP;
-      priceGBP = Math.round(etsyGBP * DISCOUNT_RATE);
-    }
+    const rate = EXCHANGE_RATES[targetCurrency];
+    const basePrice = p.price; // in TRY
+    
+    // Convert TRY to target currency, then apply 10% discount
+    const convertedPrice = Math.round((basePrice / rate) * DISCOUNT_RATE);
+    const originalPrice = Math.round(basePrice / rate);
     
     return {
       ...p,
-      originalPrice: Math.round(p.price / EXCHANGE_RATE_TRY_TO_GBP),
-      price: priceGBP,
-      currency: 'GBP'
+      originalPrice,
+      price: convertedPrice,
+      currency: targetCurrency
     };
   });
 };
 
-export const getProductById = (id: string): Product | undefined => {
-  return getProducts().find(p => p.id === id);
+export const getProductById = (id: string, targetCurrency: 'GBP' | 'USD' | 'EUR' = 'GBP'): Product | undefined => {
+  return getProducts(targetCurrency).find(p => p.id === id);
 };
 
-export const getFeaturedProducts = (limit = 4): Product[] => {
-  return getProducts().slice(0, limit);
+export const getFeaturedProducts = (limit = 4, targetCurrency: 'GBP' | 'USD' | 'EUR' = 'GBP'): Product[] => {
+  return getProducts(targetCurrency).slice(0, limit);
 };

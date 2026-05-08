@@ -13,26 +13,25 @@ Deno.serve(async (req) => {
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is missing.");
 
     const body = await req.json();
-    const { variationId, personalization, variationName, amountGBP, fbp, fbc, eventSourceUrl } = body;
+    const { variationId, personalization, variationName, amount, currency, fbp, fbc, eventSourceUrl } = body;
 
     const clientIp = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "127.0.0.1";
     const userAgent = req.headers.get("user-agent") || "";
 
-    console.log(`Creating session for ${variationName}. Personalization: ${personalization}`);
+    console.log(`Creating session for ${variationName}. Personalization: ${personalization}. Currency: ${currency}`);
 
     const origin = req.headers.get("origin") || "https://quranset.co.uk";
 
     const stripeParams = new URLSearchParams();
     stripeParams.append("payment_method_types[0]", "card");
-    // stripeParams.append("payment_method_types[1]", "paypal"); // Removed paypal temporarily to ensure best metadata support for now
     
     // Dynamic Product Name based on personalization
     const productName = personalization 
       ? `Personalized Quran Set — (${personalization})` 
       : `Personalized Quran Set — ${variationName}`;
 
-    stripeParams.append("line_items[0][price_data][currency]", "gbp");
-    stripeParams.append("line_items[0][price_data][unit_amount]", (amountGBP * 100).toString());
+    stripeParams.append("line_items[0][price_data][currency]", (currency || "gbp").toLowerCase());
+    stripeParams.append("line_items[0][price_data][unit_amount]", (amount * 100).toString());
     stripeParams.append("line_items[0][price_data][product_data][name]", productName);
     stripeParams.append("line_items[0][price_data][product_data][description]", `Personalization text: ${personalization || "Standard Set"}`);
     stripeParams.append("line_items[0][quantity]", "1");
@@ -42,6 +41,9 @@ Deno.serve(async (req) => {
     stripeParams.append("cancel_url", `${origin}/?payment=cancelled`);
     
     stripeParams.append("shipping_address_collection[allowed_countries][0]", "GB");
+    stripeParams.append("shipping_address_collection[allowed_countries][1]", "US");
+    stripeParams.append("shipping_address_collection[allowed_countries][2]", "DE");
+    stripeParams.append("shipping_address_collection[allowed_countries][3]", "FR");
     stripeParams.append("phone_number_collection[enabled]", "true");
     
     // Crucial for your Dashboard
@@ -75,8 +77,8 @@ Deno.serve(async (req) => {
             fbc: fbc,
           },
           custom_data: {
-            value: amountGBP,
-            currency: "GBP",
+            value: amount,
+            currency: currency || "GBP",
             content_name: variationName,
             content_category: "Quran Set",
           },

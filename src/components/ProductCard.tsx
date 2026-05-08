@@ -7,7 +7,11 @@ interface ProductCardProps {
   product: Product;
 }
 
+import { useCurrency } from "@/context/CurrencyContext";
+
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { formatPrice } = useCurrency();
+  
   return (
     <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gold/10 flex flex-col h-full">
       {/* Image Container */}
@@ -30,8 +34,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
         
         <div className="mt-auto">
           <div className="flex items-baseline gap-2 mb-4">
-            <span className="text-2xl font-bold text-primary">£{product.price}</span>
-            <span className="text-sm text-muted-foreground line-through">£{(product as any).originalPrice}</span>
+            <span className="text-2xl font-bold text-primary">{formatPrice(product.price)}</span>
+            <span className="text-sm text-muted-foreground line-through">{formatPrice((product as any).originalPrice)}</span>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
