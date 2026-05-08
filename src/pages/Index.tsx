@@ -6,11 +6,39 @@ import OrderForm from "@/components/OrderForm";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { ShoppingBag } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+import { getFeaturedProducts } from "@/utils/product-utils";
+import ProductGrid from "@/components/ProductGrid";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 const Index = () => {
+  const featuredProducts = getFeaturedProducts(4);
+
   return (
     <main className="min-h-screen">
       <Hero />
+      
+      {/* Featured Collection Section */}
+      <section className="py-20 bg-white">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground uppercase tracking-tight mb-4">Featured Collection</h2>
+              <p className="text-muted-foreground">Hand-picked favorites from our Turkish artisans.</p>
+            </div>
+            <Link to="/shop">
+              <Button variant="outline" className="border-gold/20 text-gold hover:bg-gold/5 font-bold uppercase tracking-widest text-xs px-8 py-6 rounded-xl group">
+                Shop All Collection
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
+          </div>
+          <ProductGrid products={featuredProducts} />
+        </div>
+      </section>
+
       <ProductFeatures />
       <Reviews />
       <FAQ />

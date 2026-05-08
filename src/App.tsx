@@ -9,6 +9,8 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
 import Contact from "./pages/Contact";
+import Shop from "./pages/Shop";
+import ProductDetails from "./pages/ProductDetails";
 import MetaPixelTracker from "./components/MetaPixelTracker";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ const App = () => {
           <MetaPixelTracker />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/shipping" element={<Shipping />} />

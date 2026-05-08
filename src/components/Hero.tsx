@@ -11,8 +11,8 @@ import productImage4 from "@/assets/product-4.jpg";
 
 const images = [productImage1, productImage2, productImage3, productImage4];
 
-// Etsy prices: Box & Quran = £120, Complete Set = £140
-// Our price = 10% less than Etsy
+import { Link } from "react-router-dom";
+
 const variations = [
   {
     id: "box-quran",
@@ -298,6 +298,15 @@ const Hero = () => {
                   <><CreditCard className="w-5 h-5 mr-2" /> Pay with Card — £{selected.price} (Stripe)</>
                 )}
               </Button>
+
+              <Link
+                to="/shop"
+                className="w-full inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-xl bg-gold/10 text-gold hover:bg-gold/20 transition-all gap-2 mb-2"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                Browse All 70+ Products
+                <ChevronRight className="w-4 h-4" />
+              </Link>
 
               <a
                 href={ETSY_URL}
