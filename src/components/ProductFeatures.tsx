@@ -27,7 +27,7 @@ const features = [
   {
     icon: Sparkles,
     title: "Star Seller",
-    description: "5-star rated on Etsy with 34 verified reviews"
+    description: "5-star rated with numerous verified reviews"
   },
   {
     icon: Box,

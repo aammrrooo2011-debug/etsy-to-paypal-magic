@@ -8,15 +8,15 @@ const faqs = [
   },
   {
     question: "Is this an authentic handmade product?",
-    answer: "Yes! Each Quran gift set is carefully handcrafted in Turkey by our production partner Mehmet in Kayseri, using premium velvet, solid wood, plexi, and paper materials. We are a Star Seller on Etsy with 34 five-star reviews from verified buyers, including many UK Muslim customers."
+    answer: "Yes! Each Quran gift set is carefully handcrafted in Turkey by our production partner Mehmet in Kayseri, using premium velvet, solid wood, plexi, and paper materials. We have numerous five-star reviews from verified buyers, including many UK Muslim customers."
   },
   {
     question: "How can I pay?",
-    answer: "The cheapest option is PayPal — our direct price is 10% less than Etsy. Simply click 'Pay with PayPal', complete the payment, then send us your order details and personalisation via email or Etsy message. Alternatively, you can buy through our Etsy shop using code AMRO001 for a discount. Etsy accepts credit/debit cards, PayPal, Apple Pay, Google Pay, and more."
+    answer: "You can pay securely via Stripe using any major credit or debit card. We also offer PayPal for buyer protection. Simply choose your preferred method at checkout."
   },
   {
     question: "What are the two product options?",
-    answer: "We offer two variations: 'Box & Quran' (£108) which includes the luxury wooden box, full-page Quran, mini Quran, and bookmark. The 'Complete Gift Set' (£126) includes everything: the box, Quran, prayer mat, crystal rosary, digital tasbih counter, gold bookmark with tassel, and prayer scarf. Both are £12–14 cheaper than our Etsy listing."
+    answer: "We offer two variations: 'Box & Quran' (£108) which includes the luxury wooden box, full-page Quran, mini Quran, and bookmark. The 'Complete Gift Set' (£126) includes everything: the box, Quran, prayer mat, crystal rosary, digital tasbih counter, gold bookmark with tassel, and prayer scarf. Both offer excellent value for premium handmade gifts."
   },
   {
     question: "Can I personalise the gift set?",

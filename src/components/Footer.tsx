@@ -55,9 +55,8 @@ const Footer = () => {
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground font-medium">
             <span className="flex items-center gap-1">🇹🇷 Handcrafted in Turkey</span>
-            <span className="flex items-center gap-1">🇬🇧 3–5 Day UK Delivery</span>
+            <span className="flex items-center gap-1">🇬🇧 Free Delivery — UK, US & EU</span>
             <span className="flex items-center gap-1">☪️ Halal Gift</span>
-            <span className="flex items-center gap-1">🏷️ 10% Cheaper than Etsy</span>
           </div>
         </div>
       </div>

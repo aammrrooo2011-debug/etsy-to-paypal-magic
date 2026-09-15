@@ -19,7 +19,6 @@ const variations = [
     name: "Box & Quran",
     description: "Luxury wooden box + Full-page Quran + Mini Quran + Bookmark",
     price: 108,       // £120 × 0.90
-    etsyPrice: 120,   // original Etsy price
     originalPrice: 150,
   },
   {
@@ -27,12 +26,9 @@ const variations = [
     name: "Complete Gift Set",
     description: "Everything included: Box, Quran, Prayer Mat, Rosary, Digital Tasbih, Bookmark & Scarf",
     price: 126,       // £140 × 0.90
-    etsyPrice: 140,   // original Etsy price
     originalPrice: 170,
   },
 ];
-
-const ETSY_URL = "https://www.etsy.com/shop/seraceislamicgifts/?etsrc=sdt&coupon=AMRO001";
 
 // Countdown timer: rolling 24h urgency
 function useCountdown() {
@@ -76,7 +72,6 @@ const Hero = () => {
         name: "Box & Quran",
         description: "Luxury wooden box + Full-page Quran + Mini Quran + Bookmark",
         price: Math.round(108 * currentRate),
-        etsyPrice: Math.round(120 * currentRate),
         originalPrice: Math.round(150 * currentRate),
       },
       {
@@ -84,7 +79,6 @@ const Hero = () => {
         name: "Complete Gift Set",
         description: "Everything included: Box, Quran, Prayer Mat, Rosary, Digital Tasbih, Bookmark & Scarf",
         price: Math.round(126 * currentRate),
-        etsyPrice: Math.round(140 * currentRate),
         originalPrice: Math.round(170 * currentRate),
       },
     ];
@@ -92,7 +86,6 @@ const Hero = () => {
 
   const variations = getVariations();
   const selected = variations[selectedVariation];
-  const savings = selected.etsyPrice - selected.price;
 
   const nextImage = () => setCurrentImage((prev) => (prev + 1) % images.length);
   const prevImage = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
@@ -151,7 +144,7 @@ const Hero = () => {
       {/* Urgency top banner */}
       <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-r from-emerald-700 via-emerald-600 to-emerald-700 text-white py-2 px-4 text-center text-sm font-semibold flex items-center justify-center gap-2 flex-wrap">
         <Clock className="w-4 h-4 animate-pulse" />
-        <span>GLOBAL SALE — 10% OFF Etsy Price ends in</span>
+        <span>GLOBAL SALE — Special Offer ends in</span>
         <span className="font-mono bg-white/20 px-2 py-0.5 rounded text-white font-bold">
           {String(countdown.h).padStart(2, "0")}:{String(countdown.m).padStart(2, "0")}:{String(countdown.s).padStart(2, "0")}
         </span>
@@ -174,7 +167,7 @@ const Hero = () => {
 
               {/* Sale badge */}
               <div className="absolute top-4 left-4 bg-emerald-600 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
-                10% CHEAPER THAN ETSY
+                SPECIAL OFFER
               </div>
 
               {/* Navigation arrows */}
@@ -226,7 +219,7 @@ const Hero = () => {
           <div className="order-2 lg:order-2 text-center lg:text-left space-y-6 animate-soft-fade-in">
             <div>
               <p className="text-sm font-semibold text-emerald-700 uppercase tracking-wider mb-2">
-                ☪️ Halal-Certified Gift • ⭐ Star Seller on Etsy • 34 Reviews
+                ☪️ Halal-Certified Gift • ⭐ Premium Quality • Verified Reviews
               </p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
                 Personalized Velvet Quran Gift Set
@@ -268,9 +261,8 @@ const Hero = () => {
                         <div className="text-sm text-muted-foreground mt-1">{v.description}</div>
                       </div>
                       <div className="text-right flex-shrink-0 ml-4">
-                        <div className="text-xs text-muted-foreground line-through">Etsy: {formatPrice(v.etsyPrice)}</div>
+                        <div className="text-xs text-muted-foreground line-through">{formatPrice(v.originalPrice)}</div>
                         <div className="text-2xl font-bold text-primary">{formatPrice(v.price)}</div>
-                        <div className="text-xs font-semibold text-emerald-600">Save {formatPrice(v.etsyPrice - v.price)} vs Etsy</div>
                       </div>
                     </div>
                   </button>
@@ -298,18 +290,15 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-3 justify-center lg:justify-start">
               <div className="flex items-baseline gap-3">
                 <span className="text-base font-medium text-muted-foreground">
-                  Etsy price: <span className="line-through">{formatPrice(selected.etsyPrice)}.00</span>
+                  Original: <span className="line-through">{formatPrice(selected.originalPrice)}.00</span>
                 </span>
                 <span className="text-4xl md:text-5xl font-bold text-primary">
                   {formatPrice(selected.price)}.00
                 </span>
               </div>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm border border-emerald-200">
-                Save {formatPrice(savings)} vs Etsy 🎉
-              </span>
             </div>
             <p className="text-sm text-muted-foreground text-center lg:text-left -mt-2">
-              Free Express Worldwide Shipping • 3–5 Day Delivery
+              Free Express Delivery to UK, US & Europe • 3–5 Day Delivery
             </p>
 
             {/* Dual CTA Buttons */}
@@ -344,27 +333,8 @@ const Hero = () => {
                 <ChevronRight className="w-4 h-4" />
               </Link>
 
-              <a
-                href={ETSY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  if (typeof window.fbq !== 'undefined') {
-                    window.fbq('track', 'InitiateCheckout', {
-                      content_name: 'Etsy Checkout',
-                      currency: 'GBP'
-                    });
-                  }
-                }}
-                className="w-full inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-xl border-2 border-primary text-foreground hover:bg-primary/5 transition-all gap-2"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                Or Buy on Etsy (Use Code AMRO001)
-                <ExternalLink className="w-4 h-4" />
-              </a>
-
               <p className="text-xs text-center text-muted-foreground">
-                🔒 Stripe checkout — secure card payment. 10% cheaper than Etsy. Buyer Protection included.
+                🔒 Stripe checkout — secure card payment. Buyer Protection included.
               </p>
             </div>
 
@@ -386,7 +356,7 @@ const Hero = () => {
                   </div>
                   <div>
                     <div className="font-bold text-sm text-foreground">Free Express</div>
-                    <div className="text-xs text-muted-foreground">UK Delivery</div>
+                    <div className="text-xs text-muted-foreground">UK, US & EU</div>
                   </div>
                 </div>
                 <div className="flex flex-col items-center text-center gap-2">
@@ -394,8 +364,8 @@ const Hero = () => {
                     <CreditCard className="w-5 h-5 text-gold" />
                   </div>
                   <div>
-                    <div className="font-bold text-sm text-foreground">PayPal</div>
-                    <div className="text-xs text-muted-foreground">Buyer Protection</div>
+                    <div className="font-bold text-sm text-foreground">Secure</div>
+                    <div className="text-xs text-muted-foreground">Stripe & PayPal</div>
                   </div>
                 </div>
               </div>

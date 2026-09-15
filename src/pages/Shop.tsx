@@ -4,6 +4,8 @@ import ProductGrid from "@/components/ProductGrid";
 import { getProducts, Product } from "@/utils/product-utils";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import CurrencySelector from "@/components/CurrencySelector";
+import SEO from "@/components/SEO";
 
 import { useCurrency } from "@/context/CurrencyContext";
 
@@ -24,6 +26,11 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-cream/30">
+      <SEO 
+        title="Shop All Islamic Gifts | Serace Islamic Gifts"
+        description="Browse our complete collection of personalized Quran sets, prayer mats, and Islamic favors. Hand-crafted with love in Turkey."
+        url={`${window.location.origin}/shop`}
+      />
       <div className="container px-4 md:px-6 py-20">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -36,7 +43,7 @@ const Shop = () => {
             </p>
           </div>
 
-          {/* Search & Filter */}
+          {/* Search, Currency & Filter */}
           <div className="flex flex-col md:flex-row gap-4 mb-12 items-center justify-between">
             <div className="relative w-full md:max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -47,9 +54,14 @@ const Shop = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <SlidersHorizontal className="w-4 h-4" />
-              <span>Showing {filteredProducts.length} products</span>
+            <div className="flex items-center gap-4">
+              <div className="bg-foreground/80 rounded-full">
+                <CurrencySelector />
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <SlidersHorizontal className="w-4 h-4" />
+                <span>Showing {filteredProducts.length} products</span>
+              </div>
             </div>
           </div>
 

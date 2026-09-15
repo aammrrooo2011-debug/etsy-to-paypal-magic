@@ -7,6 +7,7 @@ interface CheckoutOptions {
   amount: number;
   currency: string;
   personalization?: string;
+  promoCode?: string;
 }
 
 export function useStripeCheckout() {

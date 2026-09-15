@@ -13,8 +13,23 @@ const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined
 
 export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currency, setCurrencyState] = useState<CurrencyCode>(() => {
+    // 1. Check if user already chose a currency
     const saved = localStorage.getItem('preferred_currency');
-    return (saved as CurrencyCode) || 'GBP';
+    if (saved && ['GBP', 'USD', 'EUR'].includes(saved)) return saved as CurrencyCode;
+
+    // 2. Auto-detect from browser timezone
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (tz.startsWith('America/')) return 'USD';
+      if (
+        tz.startsWith('Europe/') &&
+        !tz.startsWith('Europe/London') &&
+        !tz.startsWith('Europe/Belfast')
+      ) return 'EUR';
+    } catch {}
+
+    // 3. Fallback to GBP
+    return 'GBP';
   });
 
   const setCurrency = (code: CurrencyCode) => {

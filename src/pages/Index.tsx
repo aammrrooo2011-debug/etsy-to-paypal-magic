@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
 
 import { getFeaturedProducts } from "@/utils/product-utils";
 import ProductGrid from "@/components/ProductGrid";
@@ -22,6 +23,11 @@ const Index = () => {
 
   return (
     <main className="min-h-screen">
+      <SEO 
+        title="Handmade Islamic Gifts | Serace Islamic Gifts" 
+        description="Handcrafted personalized velvet Quran gift set with luxury wooden box. Free 3-day express shipping from Turkey. Perfect for weddings & special occasions."
+        url={window.location.origin}
+      />
       <Hero />
       
       {/* Featured Collection Section */}
