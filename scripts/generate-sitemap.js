@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Change this to your actual production domain
-const DOMAIN = 'https://www.yourdomain.com';
+const DOMAIN = 'https://quranset.co.uk';
 
 const productsPath = path.resolve(process.cwd(), 'src/data/products.json');
 const publicPath = path.resolve(process.cwd(), 'public');
