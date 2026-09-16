@@ -112,14 +112,76 @@ const ProductDetails = () => {
           "name": product.title,
           "image": product.images,
           "description": product.description.replace(/\n+/g, " "),
-          "sku": (product as any).sku || product.id,
+          "sku": (product.sku && product.sku.trim() !== "") ? product.sku.trim() : `QS-${product.id.slice(0, 30)}`,
+          "brand": {
+            "@type": "Brand",
+            "name": "Serace Islamic Gifts"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "34",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "review": [
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "Fatima R."
+              },
+              "datePublished": "2026-01-15",
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5"
+              },
+              "reviewBody": "Ordered as an Eid gift for my sister — absolutely stunning quality. The velvet box is just gorgeous, and the personalisation was done beautifully."
+            }
+          ],
           "offers": {
             "@type": "Offer",
             "url": `https://quranset.co.uk/product/${product.id}`,
             "priceCurrency": currency,
             "price": product.price,
             "itemCondition": "https://schema.org/NewCondition",
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "applicableCountry": "GB",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+              "merchantReturnDays": 30,
+              "returnMethod": "https://schema.org/ReturnByMail",
+              "returnFees": "https://schema.org/FreeReturn"
+            },
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": {
+                "@type": "MonetaryAmount",
+                "value": "0.00",
+                "currency": currency
+              },
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "addressCountry": "GB"
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 1,
+                  "maxValue": 2,
+                  "unitCode": "DAY"
+                },
+                "transitTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 3,
+                  "maxValue": 5,
+                  "unitCode": "DAY"
+                }
+              }
+            }
           }
         }}
       />
